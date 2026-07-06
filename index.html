@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BandLab Clone</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+<h2>🎵 BandLab Clone</h2>
+</header>
+
+<div class="search">
+<input type="text" placeholder="Search music...">
+</div>
+
+<div class="menu">
+<div class="card">🎤 AI Splitter</div>
+<div class="card">🎵 Music</div>
+<div class="card">⬇️ Downloads</div>
+<div class="card">❤️ Favorites</div>
+</div>
+
+<section class="splitter">
+
+<h2>🎤 AI Splitter</h2>
+
+<input
+type="file"
+id="audioFile"
+accept="audio/*">
+
+<audio id="audio"></audio>
+
+<div class="player">
+
+<button id="repeatBtn">
+<i class="fas fa-repeat"></i>
+</button>
+
+<button id="prevBtn">
+<i class="fas fa-backward-step"></i>
+</button>
+
+<button id="playBtn">
+<i class="fas fa-play"></i>
+</button>
+
+<button id="pauseBtn">
+<i class="fas fa-pause"></i>
+</button>
+
+<button id="nextBtn">
+<i class="fas fa-forward-step"></i>
+</button>
+
+<button id="shuffleBtn">
+<i class="fas fa-shuffle"></i>
+</button>
+
+</div>
+
+<div class="progressBox">
+<span id="currentTime">00:00</span>
+
+<input
+type="range"
+id="progress"
+value="0"
+min="0"
+max="100">
+
+<span id="totalTime">00:00</span>
+</div>
+
+<div class="track">
+<label>🎤 Vocals</label>
+<input type="range" id="vocals" min="0" max="100" value="80">
+</div>
+
+<div class="track">
+<label>🥁 Drums</label>
+<input type="range" id="drums" min="0" max="100" value="80">
+</div>
+
+<div class="track">
+<label>🎸 Bass</label>
+<input type="range" id="bass" min="0" max="100" value="80">
+</div>
+
+<div class="track">
+<label>🎹 Others</label>
+<input type="range" id="others" min="0" max="100" value="80">
+</div>
+
+<button id="splitBtn">
+🎵 Split Song
+</button>
+
+</section>
+
+<nav>
+
+<button>
+🏠<br>Home
+</button>
+
+<button>
+🔍<br>Search
+</button>
+
+<button>
+🎼<br>Mixer
+</button>
+
+<button>
+⚙️<br>Settings
+</button>
+
+</nav>
+
+<script src="script.js"></script>
+
+</body>
+</html>
