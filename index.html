@@ -74,8 +74,19 @@ Sample Song.mp3
 <button id="shuffleBtn"><i class="fas fa-shuffle"></i></button>
 
 </div>
+<div class="player-info">
+    <span id="currentTime">00:00</span>
 
-<input type="range" value="0">
+    <input type="range" id="progressBar" value="0">
+
+    <span id="totalTime">00:00</span>
+</div>
+
+<div class="volume-box">
+    🔊
+    <input type="range" id="volumeBar" min="0" max="100" value="100">
+    <button id="muteBtn">Mute</button>
+</div>
 
 <div class="slider">
 
