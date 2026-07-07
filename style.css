@@ -382,3 +382,28 @@ animation:fadeIn .6s ease;
 body{
 padding-bottom:90px;
 }
+/* Playlist */
+
+.playlist{
+margin-top:20px;
+background:#1d212c;
+border-radius:12px;
+padding:10px;
+max-height:250px;
+overflow-y:auto;
+}
+
+.song-item{
+padding:12px;
+border-bottom:1px solid #333;
+cursor:pointer;
+transition:.3s;
+}
+
+.song-item:hover{
+background:#8a5cff;
+}
+
+.song-item.active{
+background:#8a5cff;
+}
