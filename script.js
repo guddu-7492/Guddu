@@ -94,3 +94,58 @@ audio.addEventListener("ended", function () {
 });
 
 console.log("Ultra Bass Sound Part 1 Loaded");
+// ===============================
+// Part 2 - Time + Volume
+// ===============================
+
+const progressBar = document.getElementById("progressBar");
+const currentTime = document.getElementById("currentTime");
+const totalTime = document.getElementById("totalTime");
+const volumeBar = document.getElementById("volumeBar");
+const muteBtn = document.getElementById("muteBtn");
+
+function formatTime(seconds){
+
+let min=Math.floor(seconds/60);
+
+let sec=Math.floor(seconds%60);
+
+if(sec<10) sec="0"+sec;
+
+return min+":"+sec;
+
+}
+
+audio.addEventListener("loadedmetadata",()=>{
+
+totalTime.textContent=formatTime(audio.duration);
+
+});
+
+audio.addEventListener("timeupdate",()=>{
+
+currentTime.textContent=formatTime(audio.currentTime);
+
+progressBar.value=(audio.currentTime/audio.duration)*100;
+
+});
+
+progressBar.addEventListener("input",()=>{
+
+audio.currentTime=(progressBar.value/100)*audio.duration;
+
+});
+
+volumeBar.addEventListener("input",()=>{
+
+audio.volume=volumeBar.value/100;
+
+});
+
+muteBtn.addEventListener("click",()=>{
+
+audio.muted=!audio.muted;
+
+muteBtn.textContent=audio.muted?"Unmute":"Mute";
+
+});
