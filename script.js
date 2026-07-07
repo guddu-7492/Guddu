@@ -149,3 +149,112 @@ audio.muted=!audio.muted;
 muteBtn.textContent=audio.muted?"Unmute":"Mute";
 
 });
+// ===============================
+// Part 3 - Repeat & Shuffle
+// ===============================
+
+let repeatMode = false;
+let shuffleMode = false;
+
+repeatBtn.addEventListener("click", () => {
+    repeatMode = !repeatMode;
+    audio.loop = repeatMode;
+
+    repeatBtn.style.background =
+        repeatMode ? "#8a5cff" : "#2b3142";
+});
+
+shuffleBtn.addEventListener("click", () => {
+    shuffleMode = !shuffleMode;
+
+    shuffleBtn.style.background =
+        shuffleMode ? "#8a5cff" : "#2b3142";
+
+    if (shuffleMode) {
+        alert("Shuffle Mode ON\nPlaylist feature will be added next.");
+    }
+});
+
+prevBtn.addEventListener("click", () => {
+    audio.currentTime = 0;
+});
+
+nextBtn.addEventListener("click", () => {
+    audio.currentTime = audio.duration - 1;
+});
+// =====================
+// Playlist System
+// =====================
+
+let playlist = [];
+let currentSong = 0;
+
+const playlistBox = document.getElementById("playlist");
+
+fileInput.addEventListener("change", function () {
+
+    playlist = [...this.files];
+
+    playlistBox.innerHTML = "";
+
+    playlist.forEach((song,index)=>{
+
+        let div=document.createElement("div");
+
+        div.className="song-item";
+
+        div.innerHTML=song.name;
+
+        div.onclick=()=>{
+
+            playSong(index);
+
+        };
+
+        playlistBox.appendChild(div);
+
+    });
+
+    playSong(0);
+
+});
+
+function playSong(index){
+
+currentSong=index;
+
+audio.src=URL.createObjectURL(playlist[index]);
+
+audio.play();
+
+isPlaying=true;
+
+playBtn.innerHTML='<i class="fas fa-pause"></i>';
+
+wave.innerHTML="<strong>"+playlist[index].name+"</strong>";
+
+document.querySelectorAll(".song-item").forEach(e=>e.classList.remove("active"));
+
+document.querySelectorAll(".song-item")[index].classList.add("active");
+
+}
+
+nextBtn.onclick=()=>{
+
+if(currentSong<playlist.length-1){
+
+playSong(currentSong+1);
+
+}
+
+};
+
+prevBtn.onclick=()=>{
+
+if(currentSong>0){
+
+playSong(currentSong-1);
+
+}
+
+};
