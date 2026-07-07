@@ -1,68 +1,96 @@
-const audio = document.getElementById("audio");
-const fileInput = document.getElementById("audioFile");
+// ===============================
+// Ultra Bass Sound - script.js Part 1
+// Upload + Play/Pause
+// ===============================
 
+const fileInput = document.getElementById("audioFile");
 const playBtn = document.getElementById("playBtn");
-const pauseBtn = document.getElementById("pauseBtn");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
+const repeatBtn = document.getElementById("repeatBtn");
+const shuffleBtn = document.getElementById("shuffleBtn");
 
-const progress = document.getElementById("progress");
-const currentTime = document.getElementById("currentTime");
-const totalTime = document.getElementById("totalTime");
+const progress = document.querySelector('input[type="range"]');
+const wave = document.querySelector(".wave");
 
-// File Upload
+const audio = new Audio();
+
+let isPlaying = false;
+
+// Upload Audio
 fileInput.addEventListener("change", function () {
+
     const file = this.files[0];
 
-    if (file) {
-        audio.src = URL.createObjectURL(file);
-        audio.load();
-    }
+    if (!file) return;
+
+    audio.src = URL.createObjectURL(file);
+
+    wave.innerHTML = `
+        <strong>${file.name}</strong>
+    `;
+
+    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+
+    isPlaying = false;
 });
 
-// Play
-playBtn.onclick = function () {
-    audio.play();
-};
+// Play / Pause
+playBtn.addEventListener("click", function () {
 
-// Pause
-pauseBtn.onclick = function () {
-    audio.pause();
-};
+    if (!audio.src) {
+        alert("Please upload an audio file first.");
+        return;
+    }
 
-// Back 10 Seconds
-prevBtn.onclick = function () {
-    audio.currentTime = Math.max(0, audio.currentTime - 10);
-};
+    if (isPlaying) {
 
-// Forward 10 Seconds
-nextBtn.onclick = function () {
-    audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
-};
+        audio.pause();
 
-// Total Duration
-audio.onloadedmetadata = function () {
-    progress.max = Math.floor(audio.duration);
-    totalTime.innerHTML = format(audio.duration);
-};
+        playBtn.innerHTML =
+            '<i class="fas fa-play"></i>';
 
-// Progress Update
-audio.ontimeupdate = function () {
-    progress.value = Math.floor(audio.currentTime);
-    currentTime.innerHTML = format(audio.currentTime);
-};
+    } else {
+
+        audio.play();
+
+        playBtn.innerHTML =
+            '<i class="fas fa-pause"></i>';
+
+    }
+
+    isPlaying = !isPlaying;
+
+});
+
+// Progress Bar
+audio.addEventListener("timeupdate", function () {
+
+    if (!audio.duration) return;
+
+    progress.value =
+        (audio.currentTime / audio.duration) * 100;
+
+});
 
 // Seek
-progress.oninput = function () {
-    audio.currentTime = progress.value;
-};
+progress.addEventListener("input", function () {
 
-// Time Format
-function format(time) {
-    let min = Math.floor(time / 60);
-    let sec = Math.floor(time % 60);
+    if (!audio.duration) return;
 
-    if (sec < 10) sec = "0" + sec;
+    audio.currentTime =
+        (progress.value / 100) * audio.duration;
 
-    return min + ":" + sec;
-}
+});
+
+// Song Finished
+audio.addEventListener("ended", function () {
+
+    isPlaying = false;
+
+    playBtn.innerHTML =
+        '<i class="fas fa-play"></i>';
+
+});
+
+console.log("Ultra Bass Sound Part 1 Loaded");
